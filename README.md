@@ -4,7 +4,7 @@
 ![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg?style=for-the-badge)
 ![Last Commit](https://img.shields.io/github/last-commit/MuazTPM-YT/neovim-dotfiles?style=for-the-badge)
 
-Welcome to my personal Neovim setup! This repository contains all the configuration files to get my development environment up and running quickly. It's tailored for `TypeScript, Rust, Python, C++, C, and general web development]`, aiming for a balance between aesthetics, performance, and functionality.
+Welcome to my personal Neovim setup! This repository contains all the configuration files to get my development environment up and running quickly. It's tailored for `TypeScript, Rust, Python, C++, C, and general web development`, aiming for a balance between aesthetics, performance, and functionality.
 
 ## 📂 Directory Structure
 
