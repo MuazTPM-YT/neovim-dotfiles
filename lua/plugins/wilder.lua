@@ -7,7 +7,7 @@ return {
   config = function()
     local wilder = require("wilder")
 
-    wilder.setup({ modes = { ":", "/", "?" } })
+    wilder.setup({ modes = { "0", "9", "8" } })
 
     wilder.set_option(
       "renderer",

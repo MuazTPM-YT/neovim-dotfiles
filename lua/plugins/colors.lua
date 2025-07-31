@@ -7,7 +7,7 @@ return {
     config = function()
       require("tokyonight").setup({
         style = "night",
-        transparent = true,
+        transparent = false,
         terminal_colors = true,
         styles = {
           comments = { italic = false },
@@ -41,10 +41,43 @@ return {
     name = "rose-pine",
     config = function()
       require("rose-pine").setup({
+        options = {
+          transparent = true,
+
+          styles = {
+            comments = "italic",
+            keywords = "bold",
+            types = "italic,bold",
+          },
+        },
         disable_background = true,
         styles = {
           italic = false,
         },
+      })
+
+      vim.api.nvim_create_autocmd("VimEnter", {
+        pattern = "*",
+        callback = function()
+          vim.defer_fn(function()
+            local highlights_to_fix = {
+              "NormalFloat",
+              "FloatBorder",
+              "Pmenu",
+              "PmenuSel",
+              "TelescopeNormal",
+              "TelescopeBorder",
+              "TelescopePromptNormal",
+              "TelescopePromptBorder",
+              "TelescopeResultsBorder",
+              "TelescopePreviewBorder",
+              "VertSplit",
+            }
+            for _, group in ipairs(highlights_to_fix) do
+              pcall(vim.api.nvim_set_hl, 0, group, { bg = "NONE" })
+            end
+          end, 100)
+        end,
       })
     end,
   },
@@ -67,6 +100,19 @@ return {
     lazy = false,
     priority = 1000,
     config = function()
+      require("nightfox").setup({
+        options = {
+          transparent = true,
+
+          styles = {
+            comments = "italic",
+            keywords = "bold",
+            types = "italic,bold",
+          },
+        },
+        disable_background = false,
+      })
+
       vim.cmd.colorscheme("carbonfox")
     end,
   },

@@ -20,6 +20,7 @@ return {
       highlight = { enable = true },
       indent = { enable = true },
       autopairs = { enable = true },
+      sync_install = false,
       auto_install = true,
     })
   end,

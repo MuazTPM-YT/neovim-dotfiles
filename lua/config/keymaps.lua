@@ -71,3 +71,18 @@ vim.keymap.set("v", "'", "c''<Esc>P", opts)
 vim.keymap.set("v", "(", "c()<Esc>P", opts)
 vim.keymap.set("v", "[", "c[]<Esc>P", opts)
 vim.keymap.set("v", "{", "c{}<Esc>P", opts)
+
+vim.keymap.set("n", "<leader>test", function()
+  vim.print("Leader key works!")
+end, { desc = "Test leader key" })
+
+vim.keymap.set("n", "<leader>ui", function()
+  local id = vim.fn.synID(vim.fn.line("."), vim.fn.col("."), 1)
+  if id == 0 then
+    vim.print("No highlight group under cursor.")
+    return
+  end
+  local name = vim.fn.synIDattr(id, "name")
+  local trans_name = vim.fn.synIDattr(vim.fn.synIDtrans(id), "name")
+  vim.print(string.format("Highlight group: %s -> links to: %s", name, trans_name))
+end, { desc = "Inspect UI Highlight Group" })
