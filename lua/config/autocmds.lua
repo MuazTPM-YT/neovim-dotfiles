@@ -123,39 +123,39 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
-local transparency_fix_augroup = vim.api.nvim_create_augroup("UniversalTransparencyFix", { clear = true })
-
-vim.api.nvim_create_autocmd("VimEnter", {
-  group = transparency_fix_augroup,
-  pattern = "*",
-  callback = function()
-    vim.defer_fn(function()
-      local highlights_to_fix = {
-        "NormalFloat",
-        "FloatBorder",
-        "Pmenu",
-        "PmenuSel",
-        "TelescopeNormal",
-        "TelescopeBorder",
-        "TelescopePromptNormal",
-        "TelescopePromptBorder",
-        "TelescopeResultsBorder",
-        "TelescopePreviewBorder",
-        "VertSplit",
-        "WinSeparator",
-        "CmdLine",
-        "StatusLine",
-        "StatusLineNC",
-        "TabLine",
-        "TabLineFill",
-        "TabLineSel",
-        "NeoTreeNormal",
-        "SnacksStatus",
-        "SnacksInput",
-      }
-      for _, group in ipairs(highlights_to_fix) do
-        pcall(vim.api.nvim_set_hl, 0, group, { fg = "NONE", bg = "NONE" })
-      end
-    end, 10)
-  end,
-})
+-- local transparency_fix_augroup = vim.api.nvim_create_augroup("UniversalTransparencyFix", { clear = true })
+--
+-- vim.api.nvim_create_autocmd("VimEnter", {
+--   group = transparency_fix_augroup,
+--   pattern = "*",
+--   callback = function()
+--     vim.defer_fn(function()
+--       local highlights_to_fix = {
+--         "NormalFloat",
+--         "FloatBorder",
+--         "Pmenu",
+--         "PmenuSel",
+--         "TelescopeNormal",
+--         "TelescopeBorder",
+--         "TelescopePromptNormal",
+--         "TelescopePromptBorder",
+--         "TelescopeResultsBorder",
+--         "TelescopePreviewBorder",
+--         "VertSplit",
+--         "WinSeparator",
+--         "CmdLine",
+--         "StatusLine",
+--         "StatusLineNC",
+--         "TabLine",
+--         "TabLineFill",
+--         "TabLineSel",
+--         "NeoTreeNormal",
+--         "SnacksStatus",
+--         "SnacksInput",
+--       }
+--       for _, group in ipairs(highlights_to_fix) do
+--         pcall(vim.api.nvim_set_hl, 0, group, { fg = "NONE", bg = "NONE" })
+--       end
+--     end, 10)
+--   end,
+-- })
