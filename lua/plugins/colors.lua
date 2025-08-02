@@ -1,4 +1,4 @@
-local Color = require("config.colors")
+-- local Color = require("config.colors")
 
 return {
   { "erikbackman/brightburn.vim" },
@@ -96,7 +96,7 @@ return {
 
   {
     "EdenEast/nightfox.nvim",
-    name = "carbonfox",
+    name = "nightfox",
     lazy = false,
     priority = 1000,
     config = function()
@@ -113,7 +113,7 @@ return {
         disable_background = false,
       })
 
-      vim.cmd.colorscheme("carbonfox")
+      vim.cmd.colorscheme("nightfox")
     end,
   },
 }

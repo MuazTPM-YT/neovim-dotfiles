@@ -6,6 +6,27 @@
 
 Welcome to my personal Neovim setup! This repository contains all the configuration files to get my development environment up and running quickly. It's tailored for `TypeScript, Rust, Python, C++, C, and general web development`, aiming for a balance between aesthetics, performance, and functionality.
 
+## 📂 Directory Structure
+
+My configuration is structured to be modular and easy to navigate.
+
+```
+~/.config/nvim
+├── init.lua                -- Main entry point
+├── lua/
+│   ├── config/             -- Main configuration entry
+│   │   ├── lazy.lua        -- Lazy.nvim setup
+│   │   └── options.lua     -- Global Neovim options
+│   ├── core/
+│   │   ├── keymaps.lua     -- Global keybindings
+│   │   └── autocmds.lua    -- Global autocommands
+│   └── plugins/
+│       ├── [plugin-name].lua -- Configuration for each plugin
+│       ├── ...
+│       └── lsp.lua         -- LSP server configurations
+└── ...
+```
+
 ***
 
 ## 🙏 Credits & Inspiration
