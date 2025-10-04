@@ -1,8 +1,8 @@
 return {
-  { "echasnovski/mini.nvim", version = false },
+  { "nvim-mini/mini.nvim", version = false },
 
   {
-    "echasnovski/mini.move",
+    "nvim-mini/mini.move",
     config = function()
       local MiniMove = require("mini.move")
       MiniMove.setup({

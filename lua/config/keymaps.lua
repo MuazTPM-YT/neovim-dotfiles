@@ -86,3 +86,19 @@ vim.keymap.set("n", "<leader>ui", function()
   local trans_name = vim.fn.synIDattr(vim.fn.synIDtrans(id), "name")
   vim.print(string.format("Highlight group: %s -> links to: %s", name, trans_name))
 end, { desc = "Inspect UI Highlight Group" })
+
+vim.keymap.set("n", "<leader>a", function()
+  local filename = vim.fn.expand("%:p")
+  local output_name = vim.fn.expand("%:r")
+  local compile_and_run = string.format(
+    'g++ -std=c++17 -O2 -Wall -Wextra -Wshadow -fsanitize=address,undefined -D_GLIBCXX_DEBUG "%s" -o "%s" && echo "Compilation successful. Running..." && "%s"',
+    filename,
+    output_name,
+    output_name
+  )
+
+  vim.cmd("split")
+  vim.cmd("terminal")
+  vim.api.nvim_feedkeys("i" .. compile_and_run .. "\n", "n", false)
+  vim.cmd("resize 15")
+end, { desc = "Compile and run C++ file interactively" })

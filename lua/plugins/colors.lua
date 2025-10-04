@@ -109,6 +109,13 @@ return {
             keywords = "bold",
             types = "italic,bold",
           },
+
+          groups = {
+            all = {
+              StatusLine = { bg = "none" },
+              StatusLineNC = { bg = "none" },
+            },
+          },
         },
         disable_background = false,
       })

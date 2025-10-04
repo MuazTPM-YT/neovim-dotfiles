@@ -9,12 +9,13 @@ return {
       color0 = "#092236",
       color1 = "#ff5874",
       color2 = "#c3ccdc",
-      color3 = "#1c1e26",
+      color3 = "#1C1F20",
       color6 = "#a1aab8",
       color7 = "#4cc9f0",
       color8 = "#ae81ff",
       color9 = "#06d6a0",
     }
+
     local my_lualine_theme = {
       replace = {
         a = { fg = colors.color0, bg = colors.color1, gui = "bold" },
