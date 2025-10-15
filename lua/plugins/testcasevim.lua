@@ -7,8 +7,7 @@ return {
       function()
         require("testcasevim").run()
       end,
-      desc = "Testcase Vim Run",
+      desc = "Run C++ Testcase",
     },
   },
-  config = false,
 }
