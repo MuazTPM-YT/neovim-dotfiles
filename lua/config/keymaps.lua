@@ -102,3 +102,6 @@ vim.keymap.set("n", "<leader>a", function()
   vim.api.nvim_feedkeys("i" .. compile_and_run .. "\n", "n", false)
   vim.cmd("resize 15")
 end, { desc = "Compile and run C++ file interactively" })
+
+vim.keymap.set("n", "<C-Left>", '<Cmd>lua require("testcasevim").set_debug()<CR>', opts)
+vim.keymap.set("n", "<C-Right>", '<Cmd>lua require("testcasevim").set_release()<CR>', opts)

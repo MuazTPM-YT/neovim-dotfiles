@@ -3,7 +3,6 @@ return {
     "folke/snacks.nvim",
     priority = 1000,
     lazy = false,
-    -- NOTE: Options
     opts = {
       styles = {
         input = {
@@ -13,7 +12,6 @@ return {
           },
         },
       },
-      -- Snacks Modules
       input = {
         enabled = true,
       },
@@ -109,8 +107,8 @@ return {
       image = {
         enabled = true,
         doc = {
-          float = true, -- show image on cursor hover
-          inline = false, -- show image inline
+          float = true,
+          inline = false,
           max_width = 50,
           max_height = 30,
           wo = {

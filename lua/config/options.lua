@@ -2,6 +2,8 @@
 -- vim.g.loaded_netrwPlugin = 0
 -- vim.cmd("let g:netrw_liststyle = 3")
 vim.cmd("let g:netrw_banner = 0 ")
+vim.g.minianimate_disable = true
+vim.o.guicursor = "n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20"
 
 vim.opt.guicursor = ""
 vim.opt.nu = true
@@ -21,6 +23,7 @@ vim.opt.backup = false
 vim.opt.incsearch = true
 vim.opt.inccommand = "split"
 
+vim.g.snacks_scroll = false
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 
