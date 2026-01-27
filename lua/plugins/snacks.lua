@@ -132,22 +132,6 @@ return {
           "~/Downloads",
         },
       },
-      dashboard = {
-        enabled = true,
-        sections = {
-          { section = "header" },
-          { section = "keys", gap = 1, padding = 1 },
-          { section = "startup" },
-          {
-            section = "terminal",
-            cmd = "ascii-image-converter ~/Documents/Stuff/MyImpStuff/MyBrandLogo.jpg -C -c",
-            random = 15,
-            pane = 2,
-            indent = 15,
-            height = 20,
-          },
-        },
-      },
     },
     -- NOTE: Keymaps
     keys = {
