@@ -1,8 +1,9 @@
 return {
-  { "nvim-mini/mini.nvim", version = false },
+  { "echasnovski/mini.nvim", version = false },
 
   {
-    "nvim-mini/mini.move",
+    "echasnovski/mini.nvim",
+    name = "mini.move",
     config = function()
       local MiniMove = require("mini.move")
       MiniMove.setup({
@@ -15,7 +16,7 @@ return {
           line_left = "<M-a>",
           line_right = "<M-d>",
           line_down = "<M-s>",
-          line_up = "<M-a>",
+          line_up = "<M-w>",
         },
 
         options = {
