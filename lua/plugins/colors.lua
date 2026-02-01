@@ -39,44 +39,37 @@ return {
   {
     "rose-pine/neovim",
     name = "rose-pine",
+    priority = 1000,
     config = function()
       require("rose-pine").setup({
-        options = {
-          transparent = true,
-
-          styles = {
-            comments = "italic",
-            keywords = "bold",
-            types = "italic,bold",
-          },
-        },
-        disable_background = true,
         styles = {
+          transparency = true,
           italic = false,
         },
       })
+      vim.cmd.colorscheme("rose-pine")
 
-      vim.api.nvim_create_autocmd("VimEnter", {
+      -- Force transparency for bufferline and lualine
+      vim.api.nvim_create_autocmd("ColorScheme", {
         pattern = "*",
         callback = function()
-          vim.defer_fn(function()
-            local highlights_to_fix = {
-              "NormalFloat",
-              "FloatBorder",
-              "Pmenu",
-              "PmenuSel",
-              "TelescopeNormal",
-              "TelescopeBorder",
-              "TelescopePromptNormal",
-              "TelescopePromptBorder",
-              "TelescopeResultsBorder",
-              "TelescopePreviewBorder",
-              "VertSplit",
-            }
-            for _, group in ipairs(highlights_to_fix) do
-              pcall(vim.api.nvim_set_hl, 0, group, { bg = "NONE" })
-            end
-          end, 100)
+          local hl_groups = {
+            "Normal",
+            "NormalNC",
+            "NormalFloat",
+            "FloatBorder",
+            "TelescopeNormal",
+            "TelescopeBorder",
+            "TelescopePromptNormal",
+            "TelescopePromptBorder",
+            "BufferLineFill",
+            "BufferLineBackground",
+            "StatusLine",
+            "StatusLineNC",
+          }
+          for _, group in ipairs(hl_groups) do
+            vim.api.nvim_set_hl(0, group, { bg = "NONE" })
+          end
         end,
       })
     end,
@@ -97,8 +90,6 @@ return {
   {
     "EdenEast/nightfox.nvim",
     name = "nightfox",
-    lazy = false,
-    priority = 1000,
     config = function()
       require("nightfox").setup({
         options = {
@@ -117,10 +108,7 @@ return {
             },
           },
         },
-        disable_background = false,
       })
-
-      vim.cmd.colorscheme("nightfox")
     end,
   },
 }

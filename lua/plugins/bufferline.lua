@@ -3,17 +3,18 @@ return {
   dependencies = "nvim-tree/nvim-web-devicons",
   priority = 1100,
   opts = {
+    options = {
+      theme = "auto", -- Use the colorscheme's theme
+    },
     highlights = {
-      offset_separator = { bg = "#1C1F20" },
-      close_button = { bg = "#1C1F20" },
-      close_button_visible = { bg = "#1C1F20" },
-      close_button_selected = { bg = "#1C1F20" },
-      fill = { bg = "#1C1F20" },
-      background = { bg = "#1C1F20" },
-      buffer_visible = { bg = "#1C1F20" },
-      separator = { bg = "#1C1F20" },
-      separator_visible = { bg = "#1C1F20" },
-      buffer_selected = { bg = "#1C1F20" },
+      fill = { bg = "NONE" },
+      background = { bg = "NONE" },
+      buffer_visible = { bg = "NONE" },
+      buffer_selected = { bg = "NONE" },
+      separator = { bg = "NONE" },
+      separator_selected = { bg = "NONE" },
+      separator_visible = { bg = "NONE" },
+      offset_separator = { bg = "NONE" },
     },
   },
 }

@@ -66,9 +66,12 @@ return {
     lualine.setup({
       icons_enabled = true,
       options = {
-        theme = my_lualine_theme,
+        theme = "auto",
         component_separators = { left = "|", right = "|" },
         section_separators = { left = "|", right = "" },
+        disabled_filetypes = {
+          statusline = { "dashboard", "alpha", "starter" },
+        },
       },
       sections = {
         lualine_a = { mode },
