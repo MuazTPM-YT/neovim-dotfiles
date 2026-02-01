@@ -1,12 +1,9 @@
 return {
-  { "echasnovski/mini.nvim", version = false },
-
   {
     "echasnovski/mini.nvim",
-    name = "mini.move",
+    version = false,
     config = function()
-      local MiniMove = require("mini.move")
-      MiniMove.setup({
+      require("mini.move").setup({
         mappings = {
           left = "<M-a>",
           right = "<M-d>",
@@ -18,7 +15,6 @@ return {
           line_down = "<M-s>",
           line_up = "<M-w>",
         },
-
         options = {
           reindent_linewise = true,
         },
