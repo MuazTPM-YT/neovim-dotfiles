@@ -111,4 +111,8 @@ return {
       })
     end,
   },
+
+  { "nanotech/jellybeans.vim" },
+  { "rebelot/kanagawa.nvim" },
+  { "ellisonleao/gruvbox.nvim" },
 }
