@@ -1,41 +1,36 @@
+-- NOTE: `lazyvim.plugins` is already imported by lua/config/lazy.lua; importing
+-- it a second time here was redundant.
 return {
-  { import = "lazyvim.plugins" },
-
   { import = "lazyvim.plugins.extras.lang.typescript" },
   { import = "lazyvim.plugins.extras.lang.json" },
 
   -- LSPConfig + TS helpers
   {
     "neovim/nvim-lspconfig",
-    dependencies = {
-      "jose-elias-alvarez/typescript.nvim",
-      init = function()
-        vim.api.nvim_create_autocmd("LspAttach", {
-          callback = function(args)
-            local buffer = args.buf
-            local client = vim.lsp.get_client_by_id(args.data.client_id)
-            if client and (client.name == "tsserver" or client.name == "typescript-tools") then
-              vim.keymap.set(
-                "n",
-                "<leader>co",
-                "TypescriptOrganizeImports",
-                { buffer = buffer, desc = "Organize Imports" }
-              )
-              vim.keymap.set("n", "<leader>cR", "TypescriptRenameFile", { buffer = buffer, desc = "Rename File" })
-            end
-          end,
-        })
-      end,
-    },
     opts = {
-      servers = { pyright = {}, tsserver = {} },
-      setup = {
-        tsserver = function(_, opts)
-          require("typescript").setup({ server = opts })
-          return true
-        end,
-      },
+      -- `tsserver` was renamed to `ts_ls` upstream; the old name matches nothing,
+      -- so both this entry and the old `setup.tsserver` hook were dead config.
+      servers = { pyright = {}, ts_ls = {} },
     },
+    init = function()
+      vim.api.nvim_create_autocmd("LspAttach", {
+        desc = "TypeScript LSP buffer keymaps",
+        callback = function(args)
+          local client = vim.lsp.get_client_by_id(args.data.client_id)
+          if not client or client.name ~= "ts_ls" then
+            return
+          end
+          -- ts_ls exposes this natively, so the archived typescript.nvim
+          -- wrapper is no longer needed.
+          vim.keymap.set("n", "<leader>co", function()
+            vim.lsp.buf.code_action({
+              context = { only = { "source.organizeImports" }, diagnostics = {} },
+              apply = true,
+            })
+          end, { buffer = args.buf, desc = "Organize Imports" })
+        end,
+      })
+    end,
   },
 
   -- Mason (formatters/linters)

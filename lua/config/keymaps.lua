@@ -12,7 +12,7 @@ vim.keymap.set("v", "d", "l", opts)
 
 vim.keymap.set("n", "A", "b", opts)
 vim.keymap.set("n", "D", "w", opts)
-vim.keymap.set("n", "k", "e", opts)
+-- NOTE: `k` is claimed below as `^` (line-start). Word-end is on `K` -> `E`.
 
 vim.keymap.set("n", "J", "B", opts)
 vim.keymap.set("n", "L", "W", opts)
@@ -57,24 +57,13 @@ vim.keymap.set("n", "<leader>daw", "daw", opts)
 vim.keymap.set("n", "<leader>das", "das", opts)
 vim.keymap.set("n", "<leader>dap", "dap", opts)
 
-vim.keymap.set("n", "]t", function()
-  require("todo-comments").jump_next()
-end, { desc = "Next todo comment" })
+-- NOTE: `]t` / `[t` are defined in lua/plugins/todo-comments.lua, next to the setup.
 
-vim.keymap.set("n", "[t", function()
-  require("todo-comments").jump_prev()
-end, { desc = "Previous todo comment" })
-
-vim.keymap.set("v", '"', 'c""<Esc>P', opts)
 vim.keymap.set("v", '"', 'c""<Esc>P', opts)
 vim.keymap.set("v", "'", "c''<Esc>P", opts)
 vim.keymap.set("v", "(", "c()<Esc>P", opts)
 vim.keymap.set("v", "[", "c[]<Esc>P", opts)
 vim.keymap.set("v", "{", "c{}<Esc>P", opts)
-
-vim.keymap.set("n", "<leader>test", function()
-  vim.print("Leader key works!")
-end, { desc = "Test leader key" })
 
 vim.keymap.set("n", "<leader>ui", function()
   local id = vim.fn.synID(vim.fn.line("."), vim.fn.col("."), 1)
@@ -87,21 +76,37 @@ vim.keymap.set("n", "<leader>ui", function()
   vim.print(string.format("Highlight group: %s -> links to: %s", name, trans_name))
 end, { desc = "Inspect UI Highlight Group" })
 
+-- Debug build: sanitizers + libstdc++ assertions. Slow on purpose -- it catches
+-- UB and out-of-bounds before the judge does. Use testcasevim's release mode
+-- (<C-Right>) when you actually need to measure runtime.
 vim.keymap.set("n", "<leader>a", function()
-  local filename = vim.fn.expand("%:p")
-  local output_name = vim.fn.expand("%:r")
-  local compile_and_run = string.format(
-    'g++ -std=c++17 -O2 -Wall -Wextra -Wshadow -fsanitize=address,undefined -D_GLIBCXX_DEBUG "%s" -o "%s" && echo "Compilation successful. Running..." && "%s"',
-    filename,
-    output_name,
-    output_name
-  )
+  if vim.bo.filetype ~= "cpp" then
+    vim.notify("<leader>a: not a C++ buffer", vim.log.levels.WARN)
+    return
+  end
 
-  vim.cmd("split")
-  vim.cmd("terminal")
-  vim.api.nvim_feedkeys("i" .. compile_and_run .. "\n", "n", false)
+  -- Compile what's on screen, not the last thing that happened to be saved.
+  vim.cmd("silent! write")
+
+  local src = vim.fn.shellescape(vim.fn.expand("%:p"))
+  local bin = vim.fn.shellescape(vim.fn.expand("%:p:r"))
+  local cmd = table.concat({
+    "g++ -std=c++17 -O2 -g -DDEBUG",
+    "-Wall -Wextra -Wshadow",
+    "-fsanitize=address,undefined -D_GLIBCXX_DEBUG",
+    src,
+    "-o",
+    bin,
+    '&& echo "--- compiled, running ---" &&',
+    bin,
+  }, " ")
+
+  vim.cmd("botright split")
   vim.cmd("resize 15")
-end, { desc = "Compile and run C++ file interactively" })
+  vim.cmd("enew")
+  vim.fn.jobstart({ "sh", "-c", cmd }, { term = true })
+  vim.cmd("startinsert") -- stdin goes straight to the program
+end, { desc = "Compile and run C++ file (debug build)" })
 
 vim.keymap.set("n", "<C-Left>", '<Cmd>lua require("testcasevim").set_debug()<CR>', opts)
 vim.keymap.set("n", "<C-Right>", '<Cmd>lua require("testcasevim").set_release()<CR>', opts)

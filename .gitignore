@@ -1,4 +1,5 @@
 tt.*
+.env
 .tests
 doc/tags
 debug
