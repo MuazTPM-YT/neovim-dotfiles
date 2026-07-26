@@ -10,7 +10,11 @@ local M = {}
 -- sequences below ("\n", "\e[91m") need no Lua-level escaping.
 local CPP_TEMPLATE = [==[
 #include <bits/stdc++.h>
+#include <ext/pb_ds/assoc_container.hpp>
+#include <ext/pb_ds/tree_policy.hpp>
+
 using namespace std;
+using namespace __gnu_pbds;
 
 typedef long long ll;
 typedef long double ld;
@@ -30,6 +34,14 @@ typedef unordered_map<int, int> umapii;
 typedef unordered_map<ll, ll> umapll;
 typedef map<int, int> mapii;
 typedef map<ll, ll> mapll;
+
+typedef tree<
+    pll,
+    null_type,
+    less<pll>,
+    rb_tree_tag,
+    tree_order_statistics_node_update
+> ordered_set;
 
 mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
 
