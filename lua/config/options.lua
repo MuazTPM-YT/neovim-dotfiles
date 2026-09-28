@@ -3,9 +3,8 @@
 -- vim.cmd("let g:netrw_liststyle = 3")
 vim.cmd("let g:netrw_banner = 0 ")
 vim.g.minianimate_disable = true
--- Block cursor in every mode. For per-mode shapes instead, swap this for:
---   vim.opt.guicursor = "n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20"
-vim.opt.guicursor = ""
+-- Cursor (white, steady block in every mode) is set in lua/config/colors.lua,
+-- re-applied after each theme so no theme can change it.
 vim.opt.nu = true
 vim.opt.relativenumber = true
 

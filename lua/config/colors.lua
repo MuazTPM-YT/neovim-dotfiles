@@ -75,6 +75,17 @@ local CLEAR_BG = {
   "WhichKeyNormal", "WhichKeyBorder", "LazyNormal", "MasonNormal", "NoiceCmdlinePopup",
 }
 
+-- White, non-blinking block in every mode. Some themes (doom-one, material)
+-- overwrite 'guicursor', so both are re-applied after every theme.
+local GUICURSOR = "a:block-Cursor/lCursor-blinkon0"
+
+local function cursor()
+  vim.o.guicursor = GUICURSOR
+  for _, group in ipairs({ "Cursor", "lCursor", "TermCursor" }) do
+    vim.api.nvim_set_hl(0, group, { fg = "#000000", bg = "#ffffff" })
+  end
+end
+
 local function transparent()
   for _, group in ipairs(CLEAR_BG) do
     local hl = vim.api.nvim_get_hl(0, { name = group, link = false })
@@ -116,6 +127,7 @@ vim.api.nvim_create_autocmd("ColorScheme", {
   group = group,
   callback = function(args)
     transparent()
+    cursor()
     pcall(vim.fn.writefile, { args.match }, STATE_FILE)
   end,
 })
