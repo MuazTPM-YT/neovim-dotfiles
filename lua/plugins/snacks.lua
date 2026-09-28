@@ -215,7 +215,7 @@ return {
       {
         "<leader>th",
         function()
-          require("snacks").picker.colorschemes({ layout = "ivy" })
+          require("config.colors").pick()
         end,
         desc = "Pick Color Schemes",
       },
