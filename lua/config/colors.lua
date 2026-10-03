@@ -75,9 +75,9 @@ local CLEAR_BG = {
   "WhichKeyNormal", "WhichKeyBorder", "LazyNormal", "MasonNormal", "NoiceCmdlinePopup",
 }
 
--- White, non-blinking block in every mode. Some themes (doom-one, material)
+-- White, non-blinking thick underscore in every mode. Some themes (doom-one, material)
 -- overwrite 'guicursor', so both are re-applied after every theme.
-local GUICURSOR = "a:block-Cursor/lCursor-blinkon0"
+local GUICURSOR = "a:hor25-Cursor/lCursor-blinkon0"
 
 local function cursor()
   vim.o.guicursor = GUICURSOR
