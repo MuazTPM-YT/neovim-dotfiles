@@ -129,6 +129,20 @@ int main() {
 }
 ]==]
 
+local CPP_BASIC_TEMPLATE = [==[
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    
+
+    return 0;
+}
+]==]
+
 local PYTHON_TEMPLATE = [==[
 import sys
 from collections import Counter, defaultdict, deque
@@ -155,11 +169,12 @@ main()
 
 local templates = {
   cpp = { text = CPP_TEMPLATE, anchor = "void solve() {" },
+  cpp_basic = { text = CPP_BASIC_TEMPLATE, anchor = "    cin.tie(nullptr);", offset = 2 },
   python = { text = PYTHON_TEMPLATE, anchor = "def solve():" },
 }
 
 --- Insert a template and park the cursor in the body of `solve()`.
---- @param tmpl table { text = string, anchor = string }
+--- @param tmpl table { text = string, anchor = string, offset = number? }
 local function insert_template(tmpl)
   local buf = vim.api.nvim_get_current_buf()
   local lines = vim.split(tmpl.text, "\n", { plain = true })
@@ -180,12 +195,13 @@ local function insert_template(tmpl)
     vim.api.nvim_buf_set_lines(buf, start, start, false, lines)
   end
 
-  -- Land on the line after the anchor, at its end, ready to type.
+  -- Land `offset` lines after the anchor (default 1), at its end, ready to type.
+  local offset = tmpl.offset or 1
   local row, col = start + 1, 0
   for i, line in ipairs(lines) do
     if line == tmpl.anchor then
-      row = start + i + 1
-      col = #(lines[i + 1] or "")
+      row = start + i + offset
+      col = #(lines[i + offset] or "")
       break
     end
   end
@@ -194,10 +210,10 @@ local function insert_template(tmpl)
   vim.cmd("startinsert!")
 end
 
-function M.insert(filetype)
-  local tmpl = templates[filetype or vim.bo.filetype]
+function M.insert(name)
+  local tmpl = templates[name or vim.bo.filetype]
   if not tmpl then
-    vim.notify("No template for filetype: " .. tostring(filetype or vim.bo.filetype), vim.log.levels.WARN)
+    vim.notify("No template: " .. tostring(name or vim.bo.filetype), vim.log.levels.WARN)
     return
   end
   insert_template(tmpl)
@@ -207,22 +223,23 @@ end
 local custom_augroup = vim.api.nvim_create_augroup("MyBufferMappings", { clear = true })
 
 local template_keys = {
-  cpp = "<leader>cp",
-  python = "<leader>py",
+  { filetype = "cpp", lhs = "<leader>cp", name = "cpp" },
+  { filetype = "cpp", lhs = "<leader>bp", name = "cpp_basic" },
+  { filetype = "python", lhs = "<leader>py", name = "python" },
 }
 
-for filetype, lhs in pairs(template_keys) do
+for _, key in ipairs(template_keys) do
   vim.api.nvim_create_autocmd("FileType", {
     group = custom_augroup,
-    pattern = filetype,
-    desc = "Bind " .. filetype .. " boilerplate template",
+    pattern = key.filetype,
+    desc = "Bind " .. key.name .. " boilerplate template",
     callback = function(args)
-      vim.keymap.set("n", lhs, function()
-        M.insert(filetype)
+      vim.keymap.set("n", key.lhs, function()
+        M.insert(key.name)
       end, {
         buffer = args.buf,
         silent = true,
-        desc = "Insert " .. filetype .. " boilerplate",
+        desc = "Insert " .. key.name .. " boilerplate",
       })
     end,
   })
